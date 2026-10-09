@@ -1,0 +1,76 @@
+import type { Metadata, Viewport } from "next";
+import { Bricolage_Grotesque, Geist, Geist_Mono } from "next/font/google";
+import { Providers } from "@/components/providers";
+import { ThemeScript } from "@/components/theme/theme-script";
+import { site } from "@/content/site";
+import "./globals.css";
+
+const display = Bricolage_Grotesque({
+  variable: "--font-bricolage",
+  subsets: ["latin"],
+  display: "swap",
+});
+
+const sans = Geist({
+  variable: "--font-geist",
+  subsets: ["latin"],
+  display: "swap",
+});
+
+const mono = Geist_Mono({
+  variable: "--font-geist-mono",
+  subsets: ["latin"],
+  display: "swap",
+});
+
+export const metadata: Metadata = {
+  metadataBase: new URL(site.url),
+  title: {
+    default: site.seo.title,
+    template: `%s | ${site.name}`,
+  },
+  description: site.seo.description,
+  applicationName: site.name,
+  authors: [{ name: site.fullName, url: site.url }],
+  creator: site.fullName,
+  alternates: { canonical: "/" },
+  openGraph: {
+    type: "website",
+    locale: "en_NG",
+    url: site.url,
+    siteName: site.name,
+    title: site.seo.title,
+    description: site.seo.description,
+  },
+  twitter: {
+    card: "summary_large_image",
+    creator: "@JCK_ng",
+    title: site.seo.title,
+    description: site.seo.description,
+  },
+};
+
+export const viewport: Viewport = {
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#f5f5f0" },
+    { media: "(prefers-color-scheme: dark)", color: "#0e0e0d" },
+  ],
+};
+
+export default function RootLayout({ children }: LayoutProps<"/">) {
+  return (
+    <html
+      lang="en"
+      data-theme="dark"
+      suppressHydrationWarning
+      className={`${display.variable} ${sans.variable} ${mono.variable} antialiased`}
+    >
+      <head>
+        <ThemeScript />
+      </head>
+      <body className="min-h-dvh">
+        <Providers>{children}</Providers>
+      </body>
+    </html>
+  );
+}

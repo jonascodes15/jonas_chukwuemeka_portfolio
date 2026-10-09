@@ -1,0 +1,185 @@
+@import "tailwindcss";
+
+/*
+ * Design tokens. Every colour, font and radius used on the site is defined here.
+ * Components use the Tailwind utilities generated from @theme (bg-bg, text-fg, text-accent-ink...),
+ * never raw hex values, so the palette can be changed in one place.
+ *
+ * Theme is driven by the data-theme attribute on <html>, set before first paint
+ * by the inline script in src/components/theme/theme-script.tsx.
+ */
+
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+@custom-variant light (&:where([data-theme="light"], [data-theme="light"] *));
+
+:root,
+[data-theme="light"] {
+  --bg: #f5f5f0;
+  --surface: #ffffff;
+  --surface-2: #ecece5;
+  --border: #e0e0d7;
+  --border-strong: #cfcfc4;
+  --fg: #121211;
+  --muted: #5b5b55;
+  /* Second word of two-tone display headings. 3.3:1, only ever used at display sizes. */
+  --ghost: #878780;
+  /* Accent fill (buttons, pills, highlights). Always paired with --accent-contrast text. */
+  --accent: #c6f432;
+  --accent-contrast: #0e0e0d;
+  /* Accent used as text or thin lines on the page background. Darker so it stays readable. */
+  --accent-ink: #4a6600;
+  --accent-glow: rgb(140 190 0 / 0.18);
+  --card-dark: #121211;
+  --card-dark-fg: #f4f4ef;
+  --lab-bg: #ebefe0;
+  --shadow-color: 60 60 40;
+  color-scheme: light;
+}
+
+[data-theme="dark"] {
+  --bg: #0e0e0d;
+  --surface: #181817;
+  --surface-2: #222220;
+  --border: #2a2a27;
+  --border-strong: #3a3a36;
+  --fg: #f4f4ef;
+  --muted: #a1a19a;
+  --ghost: #64645e;
+  --accent: #c6f432;
+  --accent-contrast: #0e0e0d;
+  --accent-ink: #c6f432;
+  --accent-glow: rgb(198 244 50 / 0.14);
+  --card-dark: #f4f4ef;
+  --card-dark-fg: #121211;
+  --lab-bg: #12140e;
+  --shadow-color: 0 0 0;
+  color-scheme: dark;
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-border: var(--border);
+  --color-border-strong: var(--border-strong);
+  --color-fg: var(--fg);
+  --color-muted: var(--muted);
+  --color-ghost: var(--ghost);
+  --color-accent: var(--accent);
+  --color-accent-contrast: var(--accent-contrast);
+  --color-accent-ink: var(--accent-ink);
+  --color-accent-glow: var(--accent-glow);
+  --color-card-dark: var(--card-dark);
+  --color-card-dark-fg: var(--card-dark-fg);
+  --color-lab: var(--lab-bg);
+
+  --font-display: var(--font-bricolage), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-geist), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+}
+
+@theme {
+  --radius-card: 1.5rem;
+  --radius-pill: 999px;
+
+  --text-display: clamp(3rem, 9vw, 7.5rem);
+  --text-display--line-height: 0.9;
+  --text-display--letter-spacing: -0.04em;
+  --text-section: clamp(2.5rem, 6.5vw, 5.25rem);
+  --text-section--line-height: 0.92;
+  --text-section--letter-spacing: -0.035em;
+
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+
+  --animate-marquee: marquee var(--marquee-duration, 40s) linear infinite;
+  --animate-pulse-dot: pulse-dot 2s ease-in-out infinite;
+
+  @keyframes marquee {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-50%);
+    }
+  }
+
+  @keyframes pulse-dot {
+    0%,
+    100% {
+      box-shadow: 0 0 0 0 rgb(198 244 50 / 0.6);
+    }
+    50% {
+      box-shadow: 0 0 0 6px rgb(198 244 50 / 0);
+    }
+  }
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    /* Leaves room for the sticky nav when jumping to #section anchors. */
+    scroll-padding-top: 5.5rem;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  body {
+    background-color: var(--bg);
+    color: var(--fg);
+    font-family: var(--font-sans);
+    text-rendering: optimizeLegibility;
+  }
+
+  ::selection {
+    background-color: var(--accent);
+    color: var(--accent-contrast);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--accent-ink);
+    outline-offset: 3px;
+    border-radius: 6px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+@layer components {
+  /* Page width container with the 16px mobile gutter. */
+  .container-page {
+    width: 100%;
+    max-width: 80rem;
+    margin-inline: auto;
+    padding-inline: 1rem;
+  }
+  @media (min-width: 640px) {
+    .container-page {
+      padding-inline: 1.5rem;
+    }
+  }
+  @media (min-width: 1024px) {
+    .container-page {
+      padding-inline: 2rem;
+    }
+  }
+
+  /* Subtle dotted grid used behind the hero and the data "lab" section. */
+  .bg-grid {
+    background-image: radial-gradient(
+      circle at 1px 1px,
+      color-mix(in oklab, var(--fg) 14%, transparent) 1px,
+      transparent 0
+    );
+    background-size: 28px 28px;
+  }
+}
