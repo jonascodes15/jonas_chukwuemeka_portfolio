@@ -245,3 +245,36 @@
     color: var(--accent-contrast);
   }
 }
+
+/* Admin charts (Recharts): colours follow the theme tokens. */
+.chart line.chart-grid,
+.chart .chart-grid line {
+  stroke: var(--border);
+}
+.chart .recharts-cartesian-axis-tick-value {
+  fill: var(--muted);
+}
+.chart .chart-views .recharts-area-curve {
+  stroke: var(--accent-ink);
+}
+.chart .chart-views .recharts-area-area {
+  fill: var(--accent-glow);
+}
+.chart .chart-visitors .recharts-area-curve {
+  stroke: var(--muted);
+  stroke-dasharray: 4 4;
+}
+.chart .chart-visitors .recharts-area-area {
+  fill: transparent;
+}
+.chart .chart-clicks .recharts-rectangle {
+  fill: var(--accent-ink);
+}
+.chart .chart-cursor {
+  stroke: var(--border-strong);
+  fill: var(--surface-2);
+}
+.chart .recharts-active-dot circle {
+  fill: var(--accent-ink);
+  stroke: var(--surface);
+}
