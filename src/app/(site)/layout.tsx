@@ -1,3 +1,4 @@
+import { Tracker } from "@/components/analytics/tracker";
 import { Footer } from "@/components/layout/footer";
 import { Nav } from "@/components/layout/nav";
 
@@ -17,6 +18,7 @@ export default function SiteLayout({ children }: LayoutProps<"/">) {
         {children}
       </main>
       <Footer />
+      <Tracker />
     </>
   );
 }

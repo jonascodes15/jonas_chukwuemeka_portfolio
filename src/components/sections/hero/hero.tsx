@@ -4,6 +4,7 @@ import { Reveal } from "@/components/motion/reveal";
 import { ButtonLink } from "@/components/ui/button";
 import { site } from "@/content/site";
 import { activeSocials } from "@/content/socials";
+import { getSettings } from "@/server/settings";
 import { HeroHeadline } from "./hero-headline";
 import { HeroPortrait } from "./hero-portrait";
 
@@ -14,11 +15,12 @@ export function Hero() {
 
       <div className="container-page grid items-center gap-14 pt-10 pb-20 sm:pt-14 lg:min-h-[calc(100dvh-4.5rem)] lg:grid-cols-[1.25fr_0.75fr] lg:gap-10 lg:py-16">
         <div>
-          <Reveal y={12}>
-            <p className="mb-7 inline-flex items-center gap-2.5 rounded-pill border border-border bg-surface/70 py-1.5 pr-4 pl-3 text-sm text-muted backdrop-blur">
+          <Reveal y={12} className="mb-7 flex flex-wrap items-center gap-2">
+            <p className="inline-flex items-center gap-2.5 rounded-pill border border-border bg-surface/70 py-1.5 pr-4 pl-3 text-sm text-muted backdrop-blur">
               <span aria-hidden className="size-2 animate-pulse-dot rounded-full bg-accent" />
               {site.hero.status}
             </p>
+            <AvailabilityBadge />
           </Reveal>
 
           <h1 id="hero-title" className="font-display text-hero font-extrabold text-fg">
@@ -37,14 +39,19 @@ export function Hero() {
 
           <Reveal delay={0.85} y={16}>
             <div className="mt-9 flex flex-wrap gap-3">
-              <ButtonLink href={`/#${site.hero.primaryCta.target}`} size="lg">
+              <ButtonLink href={`/#${site.hero.primaryCta.target}`} size="lg" data-track="hero:see-my-work">
                 {site.hero.primaryCta.label}
                 <ArrowDown
                   aria-hidden
                   className="size-4 transition-transform group-hover/btn:translate-y-0.5"
                 />
               </ButtonLink>
-              <ButtonLink href={`/#${site.hero.secondaryCta.target}`} size="lg" variant="secondary">
+              <ButtonLink
+                href={`/#${site.hero.secondaryCta.target}`}
+                size="lg"
+                variant="secondary"
+                data-track="hero:get-in-touch"
+              >
                 {site.hero.secondaryCta.label}
                 <ArrowUpRight
                   aria-hidden
@@ -95,5 +102,16 @@ function HeroBackground() {
       <div className="absolute -top-48 left-[8%] size-[38rem] animate-drift rounded-full bg-accent-glow blur-3xl" />
       <div className="absolute right-[-10%] bottom-[-20%] size-[30rem] animate-drift rounded-full bg-accent-glow opacity-60 blur-3xl [animation-delay:-9s]" />
     </div>
+  );
+}
+
+/** Set from /admin/settings. Cached with the page and refreshed when the setting is saved. */
+async function AvailabilityBadge() {
+  const { availableForWork, availabilityLabel } = await getSettings();
+  if (!availableForWork) return null;
+  return (
+    <p className="inline-flex items-center rounded-pill bg-accent px-3.5 py-1.5 text-sm font-medium text-accent-contrast">
+      {availabilityLabel}
+    </p>
   );
 }

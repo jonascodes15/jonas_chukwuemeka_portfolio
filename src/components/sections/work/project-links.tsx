@@ -28,7 +28,7 @@ export function ProjectLinks({
   return (
     <div className="flex flex-wrap items-center gap-3">
       {caseStudyHref && (
-        <ButtonLink href={caseStudyHref}>
+        <ButtonLink href={caseStudyHref} data-track={`case-study:${name.toLowerCase()}`}>
           Read the case study
           <ArrowRight aria-hidden className="size-4 transition-transform group-hover/btn:translate-x-0.5" />
         </ButtonLink>

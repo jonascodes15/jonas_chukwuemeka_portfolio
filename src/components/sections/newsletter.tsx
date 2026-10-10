@@ -70,7 +70,7 @@ export function Newsletter({ heading, body }: { heading: string; body: string })
               />
               {/* Honeypot for bots. */}
               <input name="website" tabIndex={-1} autoComplete="off" aria-hidden className="hidden" />
-              <Button type="submit" size="lg" disabled={pending}>
+              <Button type="submit" size="lg" disabled={pending} data-track="newsletter:subscribe">
                 {pending ? (
                   <Loader2 aria-hidden className="size-4 animate-spin" />
                 ) : (

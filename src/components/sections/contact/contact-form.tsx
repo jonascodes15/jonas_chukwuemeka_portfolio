@@ -202,7 +202,13 @@ function EnquiryForm({ enquiryTypes, budgetRanges, onReset }: Props & { onReset:
       </div>
 
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-        <Button type="submit" size="lg" disabled={pending} className="w-full sm:w-auto">
+        <Button
+          type="submit"
+          size="lg"
+          disabled={pending}
+          data-track="contact:submit"
+          className="w-full sm:w-auto"
+        >
           {pending ? (
             <>
               <Loader2 aria-hidden className="size-4 animate-spin" />

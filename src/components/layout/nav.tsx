@@ -91,6 +91,7 @@ export function Nav() {
                   <li key={link.id} className="relative">
                     <Link
                       href={`/#${link.id}`}
+                      data-track={`nav:${link.id}`}
                       aria-current={isActive ? "true" : undefined}
                       className={cn(
                         "relative z-10 block rounded-pill px-4 py-2 text-sm font-medium transition-colors",
@@ -245,6 +246,7 @@ function MobileMenu({
                 >
                   <Link
                     href={`/#${link.id}`}
+                    data-track={`menu:${link.id}`}
                     onClick={onClose}
                     className={cn(
                       "flex items-baseline gap-4 py-3 font-display text-4xl font-extrabold tracking-tight uppercase transition-colors",
