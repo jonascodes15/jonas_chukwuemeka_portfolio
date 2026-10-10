@@ -88,11 +88,45 @@
   --text-section: clamp(2.5rem, 6.5vw, 5.25rem);
   --text-section--line-height: 0.92;
   --text-section--letter-spacing: -0.035em;
+  /* Hero headline: a full sentence, so smaller than --text-display. */
+  --text-hero: clamp(2.6rem, 6.4vw, 5.5rem);
+  --text-hero--line-height: 0.98;
+  --text-hero--letter-spacing: -0.04em;
 
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
 
   --animate-marquee: marquee var(--marquee-duration, 40s) linear infinite;
   --animate-pulse-dot: pulse-dot 2s ease-in-out infinite;
+  --animate-drift: drift 18s ease-in-out infinite alternate;
+  --animate-scroll-cue: scroll-cue 2.2s ease-in-out infinite;
+
+  @keyframes drift {
+    from {
+      transform: translate3d(-12%, -6%, 0) scale(1);
+    }
+    to {
+      transform: translate3d(14%, 8%, 0) scale(1.15);
+    }
+  }
+
+  @keyframes scroll-cue {
+    0% {
+      transform: scaleY(0);
+      transform-origin: top;
+    }
+    45% {
+      transform: scaleY(1);
+      transform-origin: top;
+    }
+    55% {
+      transform: scaleY(1);
+      transform-origin: bottom;
+    }
+    100% {
+      transform: scaleY(0);
+      transform-origin: bottom;
+    }
+  }
 
   @keyframes marquee {
     from {
@@ -181,5 +215,33 @@
       transparent 0
     );
     background-size: 28px 28px;
+  }
+
+  /* Horizontal rails that scroll by touch or trackpad without showing a scrollbar. */
+  .no-scrollbar {
+    scrollbar-width: none;
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* Hero highlight (used through inline animation styles, so kept outside @theme):
+   the lime bar sweeps in, then the words over it turn dark. */
+@keyframes highlight-sweep {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+@keyframes ink {
+  from {
+    color: var(--fg);
+  }
+  to {
+    color: var(--accent-contrast);
   }
 }
