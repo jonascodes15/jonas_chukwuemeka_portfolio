@@ -40,6 +40,8 @@ export const site = {
 
   hero: {
     headline: "I build web apps and online stores for businesses.",
+    // Words in the headline that get the lime highlight. Must appear in `headline` exactly.
+    highlight: "online stores",
     subline: "Founder of Weblanda. Biologist in tech.",
     supporting:
       "I build end to end, from the first product decision to the database, the checkout and the payment that lands in your account. My training as a biologist shapes how I work with data: measured carefully, tested properly and understood before it ships.",

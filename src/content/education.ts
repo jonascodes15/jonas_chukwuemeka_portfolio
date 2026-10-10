@@ -27,6 +27,6 @@ export const publication = {
   role: "Co-author",
   contribution:
     "Responsible for hands-on laboratory procedures, experimental data collection and sample processing. Worked with the research team to compile and analyse the raw results.",
-  // TODO: add the direct link to the paper on gscbps.gsconlinepress.com (or its DOI).
-  href: null as string | null,
+  doi: "10.30574/gscbps.2024.29.2.0423",
+  href: "https://doi.org/10.30574/gscbps.2024.29.2.0423" as string | null,
 };

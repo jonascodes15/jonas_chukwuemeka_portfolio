@@ -23,15 +23,51 @@ export interface NavLink {
 export interface ProjectLink {
   label: string;
   href: string | null;
-  kind: "live" | "github" | "readme" | "paper";
+  kind: "live" | "github" | "readme" | "paper" | "x" | "linkedin" | "facebook";
 }
 
+/**
+ * A pre-optimised image. Files live at `<dir>/<name>-<width>.<avif|webp>` for every entry in `widths`
+ * (generated once from the full-size sources, so next/image does not re-encode them).
+ */
 export interface Screenshot {
-  /** Path under /public, e.g. "/projects/weblanda/dashboard.png". */
-  src: string;
-  alt: string;
+  /** Folder under /public, e.g. "/projects/weblanda". */
+  dir: string;
+  name: string;
+  widths: number[];
+  /** Intrinsic size. Only the ratio matters; it reserves space before the image loads. */
   width: number;
   height: number;
+  alt: string;
+  title?: string;
+  caption?: string;
+  device: "desktop" | "phone";
+}
+
+/** Nodes and connections for the animated architecture diagram in the Data section. */
+export interface ArchitectureNode {
+  id: string;
+  label: string;
+  detail?: string;
+  kind: "source" | "stream" | "store" | "compute" | "serve" | "orchestrate";
+  /** Grid placement, 1-based. */
+  col: number;
+  row: number;
+  colSpan?: number;
+}
+
+export interface ArchitectureEdge {
+  from: string;
+  to: string;
+  label?: string;
+  /** Dashed: control flow (orchestration) rather than data. */
+  control?: boolean;
+}
+
+export interface Architecture {
+  cols: number;
+  nodes: ArchitectureNode[];
+  edges: ArchitectureEdge[];
 }
 
 /** Case-study copy for /work/[slug]. Filled in Phase 3. */
@@ -53,9 +89,8 @@ export interface Project {
   highlights: string[];
   stack: string[];
   links: ProjectLink[];
+  /** The first screenshot is the cover image. */
   screenshots: Screenshot[];
-  /** Folder under /public/projects that screenshots should be dropped into. */
-  screenshotDir: string;
   logo?: string;
   caseStudy?: CaseStudy;
 }
@@ -63,15 +98,16 @@ export interface Project {
 export interface DataProject extends Project {
   /** Real, verifiable figures only. Rendered with animated counters. */
   metrics?: { value: number; decimals?: number; prefix?: string; suffix?: string; label: string }[];
-  /** True for the large featured card with the architecture diagram. */
+  /** True for the large featured card. */
   featured?: boolean;
+  architecture?: Architecture;
 }
 
 export interface Store {
   name: string;
   description: string;
   href: string | null;
-  logo?: string;
+  logo?: { src: string; width: number; height: number; widths: number[]; background: string };
 }
 
 export interface ExperienceItem {
