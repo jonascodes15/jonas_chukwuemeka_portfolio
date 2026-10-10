@@ -11,7 +11,8 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "image": "node scripts/optimize-image.mjs",
-    "hash-password": "node scripts/hash-password.mjs"
+    "hash-password": "node scripts/hash-password.mjs",
+    "icons": "node scripts/build-icons.mjs"
   },
   "dependencies": {
     "bcryptjs": "^3.0.3",

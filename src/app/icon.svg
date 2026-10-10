@@ -1,4 +1,9 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <rect width="64" height="64" rx="16" fill="#c6f432"/>
-  <text x="32" y="43" text-anchor="middle" font-family="Arial Black, Arial, Helvetica, sans-serif" font-weight="900" font-size="28" letter-spacing="-1.5" fill="#0e0e0d">JC</text>
+  <rect width="64" height="64" rx="14" fill="#0e0e0d"/>
+  <g transform="translate(8.5 8)">
+  <g fill="none" stroke="#c6f432" stroke-width="3.4" stroke-linejoin="miter">
+    <path d="M11 20V4h33v40H11v-3"/>
+    <path d="M11 23v9a4 4 0 0 1-8 0"/>
+    <path d="M27.6 24.9A6.5 6.5 0 1 0 27.6 34.1"/>
+  </g></g>
 </svg>
