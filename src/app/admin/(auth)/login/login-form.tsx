@@ -1,13 +1,15 @@
 "use client";
 
-import { CircleAlert, Loader2 } from "lucide-react";
-import { useActionState } from "react";
+import { CircleAlert, Eye, EyeOff, Loader2 } from "lucide-react";
+import { useActionState, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Field, inputClasses } from "@/components/ui/field";
 import { login, type LoginState } from "@/server/actions/auth";
+import { cn } from "@/lib/utils";
 
 export function LoginForm({ next }: { next: string }) {
   const [state, action, pending] = useActionState<LoginState, FormData>(login, {});
+  const [showPassword, setShowPassword] = useState(false);
 
   return (
     <form action={action} className="mt-8 flex flex-col gap-5">
@@ -24,14 +26,30 @@ export function LoginForm({ next }: { next: string }) {
         />
       </Field>
       <Field id="admin-password" label="Password">
-        <input
-          id="admin-password"
-          name="password"
-          type="password"
-          autoComplete="current-password"
-          required
-          className={inputClasses}
-        />
+        <div className="relative">
+          <input
+            id="admin-password"
+            name="password"
+            type={showPassword ? "text" : "password"}
+            autoComplete="current-password"
+            required
+            className={cn(inputClasses, "pr-12")}
+          />
+          <button
+            type="button"
+            onClick={() => setShowPassword((s) => !s)}
+            aria-label={showPassword ? "Hide password" : "Show password"}
+            aria-pressed={showPassword}
+            aria-controls="admin-password"
+            className="absolute inset-y-0 right-1.5 my-auto grid size-9 place-items-center rounded-lg text-muted transition-colors hover:text-fg"
+          >
+            {showPassword ? (
+              <EyeOff aria-hidden className="size-4.5" />
+            ) : (
+              <Eye aria-hidden className="size-4.5" />
+            )}
+          </button>
+        </div>
       </Field>
       {state.error && (
         <p

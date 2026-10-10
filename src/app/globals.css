@@ -278,3 +278,9 @@
   fill: var(--accent-ink);
   stroke: var(--surface);
 }
+
+/* Edge adds its own reveal button to password fields; the login form has its own. */
+input::-ms-reveal,
+input::-ms-clear {
+  display: none;
+}
