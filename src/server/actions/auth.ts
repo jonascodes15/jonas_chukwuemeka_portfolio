@@ -30,13 +30,21 @@ export async function login(_prev: LoginState, formData: FormData): Promise<Logi
   const email = String(formData.get("email") ?? "")
     .trim()
     .toLowerCase();
+  if (!optionalEnv("IP_HASH_SALT")) {
+    return { error: "IP_HASH_SALT isn't set on this server. Add it, then restart or redeploy.", email };
+  }
   const h = await headers();
   try {
     const limit = await rateLimit(`login:${ipHash(h)}`, 5, 15 * 60);
     if (!limit.ok) return { error: "Too many attempts. Wait 15 minutes and try again.", email };
   } catch (err) {
-    console.error("[login] rate limit unavailable", err);
-    return { error: "Login is unavailable right now. Check DATABASE_URL and IP_HASH_SALT.", email };
+    // The full error is in the server logs (terminal locally, Vercel > Logs in production).
+    console.error("[login] rate limit query failed", err);
+    const detail = err instanceof Error ? err.message.slice(0, 140) : "unknown error";
+    return {
+      error: `Can't reach the database (${detail}). Check DATABASE_URL, then restart or redeploy.`,
+      email,
+    };
   }
 
   const password = String(formData.get("password") ?? "");
